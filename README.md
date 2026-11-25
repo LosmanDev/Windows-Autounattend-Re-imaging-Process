@@ -1,4 +1,4 @@
-# Windows 11 Enterprise Zero-Driver USB Deployment (Mixed Lenovo & Surface Fleet)
+# Windows 11 Enterprise USB Deployment Automated Driver Install
 
 Standardized bare-metal USB deployment for mixed enterprise fleets running **Lenovo ThinkPad (X1 / X13)** and **Microsoft Surface Laptop (5, 6 for Business, and 7 Intel)** endpoints.
 
