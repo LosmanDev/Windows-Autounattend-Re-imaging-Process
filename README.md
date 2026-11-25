@@ -2,12 +2,6 @@
 
 Standardized bare-metal USB deployment for mixed enterprise fleets running **Lenovo ThinkPad (X1 / X13)** and **Microsoft Surface Laptop (5, 6 for Business, and 7 Intel)** endpoints.
 
-## Problem Solved
-
-Offline DISM driver injection and `autounattend.xml` PnP driver paths frequently fail to bind Surface input hardware during the Out-of-Box Experience (OOBE). Surface built-in keyboards and touchpads route through the Intel Serial IO (I2C/SPI) bus, Surface Serial Hub, and Surface System Aggregator Module (SAM).
-
-This workflow avoids bloating deployment USBs with 4–6 GB of extracted Surface driver packages by leveraging `SetupComplete.cmd` (executed automatically under Volume License / Enterprise GVLK keys immediately prior to OOBE) to detect Surface hardware and install the official Windows 11 Surface MSI online.
-
 ## Supported Hardware
 
 | Hardware Family | Behavior During Deployment |
@@ -237,15 +231,10 @@ After Rufus finishes, mirror the verified master USB (`D:\`) to the newly initia
 robocopy D:\ F:\ /MIR /R:3 /W:1
 ```
 
-## Deployment Execution & Exit Code `3010`
-
+## Logs & Verification
 1. Connect wired Ethernet and the deployment USB to the endpoint and boot to USB.
 2. Windows Setup wipes Disk 0, installs Windows 11 Enterprise, and executes `SetupComplete.cmd` before OOBE (adds 3–5 minutes on Surface endpoints for MSI download and installation).
 3. Surface driver MSIs typically return exit code `3010` (`ERROR_SUCCESS_REBOOT_REQUIRED`) because Intel Serial IO and SAM bus drivers require one kernel restart to bind.
-4. When the Surface reaches the OOBE country/region screen, **power-cycle the device once** using the physical power button. Built-in keyboard and touchpad input will initialize immediately upon returning to OOBE—no external peripherals required.
-
-## Logs & Verification
-
 Press `Shift + F10` at OOBE and inspect the deployment log:
 
 ```powershell
@@ -254,9 +243,5 @@ Get-Content 'C:\ProgramData\Reimage\SurfaceOnline\Install.log'
 
 * **Success:** `msiexec exit code: 0` or `msiexec exit code: 3010`
 * **Detailed MSI Log:** `C:\ProgramData\Reimage\SurfaceOnline\Surface*_msiexec.log`
-* **Syntax Check (Technician PC):**
 
-```powershell
-[xml](Get-Content 'D:\Autounattend.xml') | Out-Null
-[System.Management.Automation.Language.Parser]::ParseFile('D:\sources\$OEM$\$$\Setup\Scripts\Install-SurfaceOnline.ps1', [ref]$null, [ref]$errors);$errors
-```
+
