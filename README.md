@@ -20,10 +20,10 @@ This workflow avoids bloating deployment USBs with 4–6 GB of extracted Surface
 
 ## Prerequisites
 
-* **USB Flash Drive:** 32 GB or larger.
+* **USB Flash Drive:** 16 GB or larger.
 * **Rufus 3.17 or newer (4.x recommended):** Required for the Microsoft-signed `UEFI:NTFS` bootloader so Secure Boot remains enabled on Surface and Lenovo hardware.
 * **Windows 11 Enterprise ISO:** Clean, unmodified `boot.wim` and `install.wim` (no offline-injected drivers).
-* **Wired Network:** USB-C Ethernet adapter using an inbox Windows 11 driver with internet access to `www.microsoft.com` and `download.microsoft.com` during imaging.
+* **Wired Network:** USB-C Ethernet adapter for automation to access `www.microsoft.com` and `download.microsoft.com` during imaging.
 
 ## USB Directory Structure
 
@@ -218,7 +218,7 @@ finally {
 
 ### Initialize a Blank USB (Rufus 4.x)
 
-1. Insert a 32 GB+ USB flash drive.
+1. Insert a 16 GB+ USB flash drive.
 2. Open **Rufus 4.x** and select the drive under **Device**.
 3. Expand **Show advanced drive properties**.
 4. Configure:
